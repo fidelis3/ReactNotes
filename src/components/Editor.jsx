@@ -1,30 +1,19 @@
 import React from "react"
-import ReactMde from "react-mde"
-import "react-mde/lib/styles/css/react-mde-all.css"
-import { Converter } from "showdown"
+import MDEditor from "@uiw/react-md-editor"
 
 export default function Editor({ currentNote, updateNote }) {
-    const [selectedTab, setSelectedTab] = React.useState("write")
-    
-    const converter = new Converter({
-        tables: true,
-        simplifiedAutoLink: true,
-        strikethrough: true,
-        tasklists: true,
-    })  
-    
     return (
         <section className="pane editor">
-            <ReactMde
+            <MDEditor
                 value={currentNote?.body || ""}
                 onChange={updateNote}
-                selectedTab={selectedTab}
-                onTabChange={setSelectedTab}
-                generateMarkdownPreview={(markdown) =>
-                    Promise.resolve(converter.makeHtml(markdown))
-                }
-                minEditorHeight={80}
-                heightUnits="vh"
+                preview="edit"
+                hideToolbar={false}
+                visibleDragBar={false}
+                textareaProps={{
+                    placeholder: "Start writing your note in markdown..."
+                }}
+                height={400}
             />
         </section>
     )
